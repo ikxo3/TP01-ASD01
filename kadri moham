@@ -1,0 +1,112 @@
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+#define RED_TEXT   "\033[1;31m"
+#define GREEN_TEXT "\033[1;32m"
+#define YELLOW_TEXT "\033[1;33m"
+#define RESET_TEXT "\033[0m"
+//this project was devloped by kadri mohamed <3
+
+char *modules[7] = {"ASDD01   ","ANALYSE01","ALGEBRA01", "AO01     " , "OS01     " , "BW       " , "WT       "};
+char *examen[7] = {"Test   ","T D "," T P", "Examen" , "Moyen_M " , "Ratrapage" , "Final_M"};
+float matrice[8][8] ;
+float Mg= 0 ;
+void gotoxy(int x, int y) {
+    printf("\033[%d;%df", y, x);
+    fflush(stdout);
+}
+void inputmark(float matrix[8][8]){
+
+
+    for (int i = 0; i < 7; i++) {
+        for (int j =0; j < 7; j++) {
+            matrix[i][j]=0;
+        }}
+Mg==0;
+int counter =1 ;
+   do {
+    switch (counter){
+     case 2:
+     case 3:
+     case 4:
+                printf("enter ur marks in %s where quis td and exam\n",modules[counter-1]);
+                scanf("%f%f%f",&matrix[counter-1][0],&matrix[counter-1][1],&matrix[counter-1][3]);
+                matrix[counter-1][4]=(matrix[counter-1][0]+matrix[counter-1][1]+matrix[counter-1][3]*3)/5 ;
+                break;
+     case 1:
+                printf("enter ur marks in %s where quis td tp and exam\n",modules[counter-1]);
+                scanf("%f%f%f%f",&matrix[counter-1][0],&matrix[counter-1][1],&matrix[counter-1][2],&matrix[counter-1][3]);
+                matrix[counter-1][4]=(((matrix[counter-1][0]+matrix[counter-1][1]+matrix[counter-1][2])/3 )*2+matrix[counter-1][3]*3)/5;
+                break;
+
+      case 5:
+      case 6:
+                printf("enter ur marks in %s where quis tp and exam\n",modules[counter-1]);
+                scanf("%f%f%f",&matrix[counter-1][0],&matrix[counter-1][2],&matrix[counter-1][3]);
+                matrix[counter-1][4]=(matrix[counter-1][0]+matrix[counter-1][2]+matrix[counter-1][3]*3)/5 ;
+                break;
+      case 7:
+                printf("enter ur marks in %s exam\n",modules[counter-1]);
+                scanf("%f",&matrix[counter-1][3]);
+                matrix[counter-1][4]=matrix[counter-1][3];
+                break;
+        default :printf("0");}
+       Mg=Mg+matrix[counter-1][4];
+   counter++ ;
+   }while (counter< 8); Mg=Mg/7;
+}
+void display()
+{
+system("cls");
+gotoxy(25,18);printf("MoyeenG : %.2f ",Mg);
+    for (int k=0; k<7;k++){
+        gotoxy((k+1)*12,0);printf("%s \t",examen[k]);
+    }
+
+    for (int i = 0; i < 7; i++) {
+        gotoxy(0,i+2);printf("%s \t",modules[i]);
+        for (int j =0; j < 7; j++) {
+         gotoxy((j+1)*12,i+2);
+             if (matrice[i][j]< 10) {
+             printf(RED_TEXT "| %.2f | " RESET_TEXT, matrice[i][j]);
+         } else
+            printf(GREEN_TEXT "| %.2f | "RESET_TEXT , matrice[i][j]);
+
+        }
+        printf("\n");
+    }
+}
+void remediation(){
+    if (Mg < 10){
+            Mg=0;
+        for(int i=0 ; i<7;i++) {
+        if (matrice[i][4]<10){
+            printf("Enter remediation mark of %s  :", modules[i]);
+            scanf("%f",&matrice[i][5]);
+            }
+            if (matrice[i][4]>matrice[i][5]){
+                matrice[i][6]=matrice[i][4];}
+           else{matrice[i][6]=matrice[i][5];}
+            Mg=Mg+matrice[i][6];
+            }
+            Mg=Mg/7;}}
+int main()
+{
+int compt;
+    do {
+     compt==0;
+     system("cls");
+     printf("Hi ! \n U are student in science computer engineer\n please enter ur markes, good luck !!\n") ;
+     printf(" 1: Inputs \n");
+     printf(" 2: Remediation \n");
+     printf(" 3: Display \n");
+     printf(" 4: Exit  \n");
+     printf(" enter your chois   :");
+     scanf("%d",&compt);
+       if (compt==1) {inputmark(matrice);}
+       if (compt==2) {remediation();}
+       if (compt==3) {display();}
+    _getch();
+}while (compt < 4);
+    return 0;
+}
